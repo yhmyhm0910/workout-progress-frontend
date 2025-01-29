@@ -1,0 +1,40 @@
+<div>
+  <c-accordion [alwaysOpen]="true">
+    <c-accordion-item #item0="cAccordionItem" [visible]="false">
+      <ng-template cTemplateId="accordionHeaderTemplate">
+        <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+          1. Are the standards based on my Google Account's gender?
+        </button>
+      </ng-template>
+      <ng-template cTemplateId="accordionBodyTemplate">
+        <div class="accordion-body">
+          This site currently only show male standards. The female standards will be available soon.
+        </div>
+      </ng-template>
+    </c-accordion-item>
+    <c-accordion-item #item1="cAccordionItem" [visible]="false">
+      <ng-template cTemplateId="accordionHeaderTemplate">
+        <button (click)="item1.toggleItem()" [collapsed]="!item1.visible" cAccordionButton>
+          2. Where will my data be stored?
+        </button>
+      </ng-template>
+      <ng-template cTemplateId="accordionBodyTemplate">
+        <div class="accordion-body">
+          Your data will be stored in a cloud PostgreSQL database securely.
+        </div>
+      </ng-template>
+    </c-accordion-item>
+    <c-accordion-item #item2="cAccordionItem" [visible]="false">
+      <ng-template cTemplateId="accordionHeaderTemplate">
+        <button (click)="item2.toggleItem()" [collapsed]="!item2.visible" cAccordionButton>
+          3. How can I contribute / report issues of this site?
+        </button>
+      </ng-template>
+      <ng-template cTemplateId="accordionBodyTemplate">
+        <div class="accordion-body">
+          You can create a 'New issue' on <a href="https://github.com/yhmyhm0910/workout-progress/issues">https://github.com/yhmyhm0910/workout-progress/issues</a> to report issues / suggest new features.
+        </div>
+      </ng-template>
+    </c-accordion-item>
+  </c-accordion>
+</div>

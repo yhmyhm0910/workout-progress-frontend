@@ -1,0 +1,335 @@
+<c-row class="mb-4 mt-4 gx-0"> <!-- Added gx-0 to remove horizontal gutter -->
+  <c-col xs="12">
+    <input cFormControl
+      id="searchBar"
+      [(ngModel)]="searchString"
+      (input)="searchBarChange(searchString)"
+      placeholder="Search for saved exercises..."
+      class="w-100"
+    />
+  </c-col>
+</c-row>
+
+
+<c-row xs="auto" class="mb-4">
+  <c-col>
+    <button cButton (click)="addExerciseButton()" color="primary">Add a record</button>
+  </c-col>
+  <c-col>
+    <button cButton (click)="deleteRecordButton()" color="warning">Delete a record</button>
+  </c-col>
+</c-row>
+
+<c-row>
+  <c-col>
+    <c-row *ngIf="addExercisesClicked" xs="auto" class="mb-4">
+      <c-col>
+        <c-form-check>
+          <input cFormCheckInput id="checkWhole_Body" type="checkbox" [checked]="selectedBodyPart === 'Whole Body'" (change)="selectOnly('Whole Body')" />
+          <label cFormCheckLabel for="checkWhole_Body">Whole Body</label>
+        </c-form-check>
+      </c-col>
+      <c-col>
+        <c-form-check>
+          <input cFormCheckInput id="checkBack" type="checkbox" [checked]="selectedBodyPart === 'Back'" (change)="selectOnly('Back')" />
+          <label cFormCheckLabel for="checkBack">Back</label>
+        </c-form-check>
+      </c-col>
+      <c-col>
+        <c-form-check>
+          <input cFormCheckInput id="checkBiceps" type="checkbox" [checked]="selectedBodyPart === 'Biceps'" (change)="selectOnly('Biceps')" />
+          <label cFormCheckLabel for="checkBiceps">Biceps</label>
+        </c-form-check>
+      </c-col>
+      <c-col>
+        <c-form-check>
+          <input cFormCheckInput id="checkChest" type="checkbox" [checked]="selectedBodyPart === 'Chest'" (change)="selectOnly('Chest')" />
+          <label cFormCheckLabel for="checkChest">Chest</label>
+        </c-form-check>
+      </c-col>
+      <c-col>
+        <c-form-check>
+          <input cFormCheckInput id="checkCore" type="checkbox" [checked]="selectedBodyPart === 'Core'" (change)="selectOnly('Core')" />
+          <label cFormCheckLabel for="checkCore">Core</label>
+        </c-form-check>
+      </c-col>
+      <c-col>
+        <c-form-check>
+          <input cFormCheckInput id="checkForearms" type="checkbox" [checked]="selectedBodyPart === 'Forearms'" (change)="selectOnly('Forearms')" />
+          <label cFormCheckLabel for="checkForearms">Forearms</label>
+        </c-form-check>
+      </c-col>
+      <c-col>
+        <c-form-check>
+          <input cFormCheckInput id="checkLegs" type="checkbox" [checked]="selectedBodyPart === 'Legs'" (change)="selectOnly('Legs')" />
+          <label cFormCheckLabel for="checkLegs">Legs</label>
+        </c-form-check>
+      </c-col>
+      <c-col>
+        <c-form-check>
+          <input cFormCheckInput id="checkShoulders" type="checkbox" [checked]="selectedBodyPart === 'Shoulders'" (change)="selectOnly('Shoulders')" />
+          <label cFormCheckLabel for="checkShoulders">Shoulders</label>
+        </c-form-check>
+      </c-col>
+      <c-col>
+        <c-form-check>
+          <input cFormCheckInput id="checkTriceps" type="checkbox" [checked]="selectedBodyPart === 'Triceps'" (change)="selectOnly('Triceps')" />
+          <label cFormCheckLabel for="checkTriceps">Triceps</label>
+        </c-form-check>
+      </c-col>
+    </c-row>
+  </c-col>
+</c-row>
+
+<c-row>
+  <c-col>
+    <c-row *ngIf="deleteRecordClicked" xs="auto" class="mb-4">
+      <table cTable>
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Record created time</th>
+            <th scope="col">One Rep Max (lbs)</th>
+            <th scope="col">Body Weight (lbs)</th>
+            <th scope="col">Experienced months</th>
+            <th scope="col">Date of the lift</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let details of existing_records_dict_desc_creating_time">
+            <th scope="row">{{details.exercise_name}}</th>
+            <td>{{convertToUserTime(details.created_at, true)}}</td>
+            <td>{{details.one_rep_max}}</td>
+            <td>{{details.body_weight}}</td>
+            <td>{{details.experience_month}}</td>
+            <td>{{convertToUserTime(details.date_of_exercise, false)}}</td>
+            <td>
+              <div style="display: inline-block; cursor: pointer; " (click)="deleteRecord(details)"><svg cIcon name="cilTrash" size="xl" ></svg>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </c-row>
+  </c-col>
+</c-row>
+
+<div *ngFor="let alert of [].constructor(alertCount); let i = index">
+  @if (alertVisible[i]) {
+    @if (alertType[i] == "insert") {
+      <c-alert [(visible)]="alertVisible[i]" [dismissible]="alertDismissible[i]" color="success" fade>
+        Successfully inserted a <strong>{{exerciseModified[i]}}</strong> record with 1RM=<strong>{{oneRepMaxModified[i]}}</strong>.
+      </c-alert>
+    }
+    @if (alertType[i] == "delete") {
+      <c-alert [(visible)]="alertVisible[i]" [dismissible]="alertDismissible[i]" color="warning" fade>
+        Successfully deleted a <strong>{{exerciseModified[i]}}</strong> record with 1RM=<strong>{{oneRepMaxModified[i]}}</strong>.
+      </c-alert>
+    }
+  }
+</div>
+
+<c-row *ngIf="addExercisesClicked && selectedBodyPart" xs="auto" class="mt-2">
+  <c-col xs="12">
+    <p [ngSwitch]="selectedBodyPart">
+      <span *ngSwitchCase="'Whole Body'">
+        <c-row  xs="auto" class="mt-2">
+          <c-col *ngFor="let exercise of exercises_name_by_body_part[0]" xs="auto" class="mt-2">
+            <button cButton (click)="changeInputtingExercise(exercise)" [cModalToggle]="verticallyCenteredModal.id" color="secondary">{{exercise}}</button>
+          </c-col>
+        </c-row>
+      </span>
+      <span *ngSwitchCase="'Back'">
+        <c-row  xs="auto" class="mt-2">
+          <c-col *ngFor="let exercise of exercises_name_by_body_part[1]" xs="auto" class="mt-2">
+            <button cButton (click)="changeInputtingExercise(exercise)" [cModalToggle]="verticallyCenteredModal.id" color="secondary">{{exercise}}</button>
+          </c-col>
+        </c-row>
+      </span>
+      <span *ngSwitchCase="'Biceps'">
+        <c-row  xs="auto" class="mt-2">
+          <c-col *ngFor="let exercise of exercises_name_by_body_part[2]" xs="auto" class="mt-2">
+            <button cButton (click)="changeInputtingExercise(exercise)" [cModalToggle]="verticallyCenteredModal.id" color="secondary">{{exercise}}</button>
+          </c-col>
+        </c-row>
+      </span>
+      <span *ngSwitchCase="'Chest'">
+        <c-row  xs="auto" class="mt-2">
+          <c-col *ngFor="let exercise of exercises_name_by_body_part[3]" xs="auto" class="mt-2">
+            <button cButton (click)="changeInputtingExercise(exercise)" [cModalToggle]="verticallyCenteredModal.id" color="secondary">{{exercise}}</button>
+          </c-col>
+        </c-row>
+      </span>
+      <span *ngSwitchCase="'Core'">
+        <c-row  xs="auto" class="mt-2">
+          <c-col *ngFor="let exercise of exercises_name_by_body_part[4]" xs="auto" class="mt-2">
+            <button cButton (click)="changeInputtingExercise(exercise)" [cModalToggle]="verticallyCenteredModal.id" color="secondary">{{exercise}}</button>
+          </c-col>
+        </c-row>
+      </span>
+      <span *ngSwitchCase="'Forearms'">
+        <c-row  xs="auto" class="mt-2">
+          <c-col *ngFor="let exercise of exercises_name_by_body_part[5]" xs="auto" class="mt-2">
+            <button cButton (click)="changeInputtingExercise(exercise)" [cModalToggle]="verticallyCenteredModal.id" color="secondary">{{exercise}}</button>
+          </c-col>
+        </c-row>
+      </span>
+      <span *ngSwitchCase="'Legs'">
+        <c-row  xs="auto" class="mt-2">
+          <c-col *ngFor="let exercise of exercises_name_by_body_part[6]" xs="auto" class="mt-2">
+            <button cButton (click)="changeInputtingExercise(exercise)" [cModalToggle]="verticallyCenteredModal.id" color="secondary">{{exercise}}</button>
+          </c-col>
+        </c-row>
+      </span>
+      <span *ngSwitchCase="'Shoulders'">
+        <c-row  xs="auto" class="mt-2">
+          <c-col *ngFor="let exercise of exercises_name_by_body_part[7]" xs="auto" class="mt-2">
+            <button cButton (click)="changeInputtingExercise(exercise)" [cModalToggle]="verticallyCenteredModal.id" color="secondary">{{exercise}}</button>
+          </c-col>
+        </c-row>
+      </span>
+      <span *ngSwitchCase="'Triceps'">
+        <c-row  xs="auto" class="mt-2">
+          <c-col *ngFor="let exercise of exercises_name_by_body_part[8]" xs="auto" class="mt-2">
+            <button cButton (click)="changeInputtingExercise(exercise)" [cModalToggle]="verticallyCenteredModal.id" color="secondary">{{exercise}}</button>
+          </c-col>
+        </c-row>
+      </span>
+      <span *ngSwitchDefault>Unknown selection</span>
+    </p>
+  </c-col>
+</c-row>
+<!-- *ngFor="let record of existing_records_dict | keyvalue" -->
+<c-row>
+  <c-col xs="6" *ngFor="let record of searched_presenting_records_dict | keyvalue">
+      <c-card class="mb-4">
+        <c-card-header>
+          {{record.key}}
+        </c-card-header>
+        <c-card-body >
+          <c-chart type="line" [data]="record.value" [options]="options"></c-chart>
+        </c-card-body>
+      </c-card>
+  </c-col>
+</c-row>
+
+<c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
+  <c-modal-header>
+    <h5 cModalTitle>{{selectedInputtingExerciseName}}</h5>
+    <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <c-row class="mt-1 mb-1">
+      <c-col xs="3">
+        1RM (lbs):
+      </c-col>
+      <c-col xs="9">
+        <input cFormControl
+          (input)="validOneRepMaxInput()"
+          id="1RM form"
+          placeholder="Example: 100"
+          class="w-60"
+          [(ngModel)]="inputtedOneRepMax"
+        />
+      </c-col>
+    </c-row>
+    <c-row class="mt-1 mb-1">
+      <c-col xs="3">
+        Body Weight (lbs):
+      </c-col>
+      <c-col xs="9">
+        <input cFormControl
+          (input)="validBodyWeightInput()"
+          id="BodyWeight form"
+          placeholder="Example: 150"
+          class="w-60"
+          [(ngModel)]="inputtedBodyWeight"
+        />
+      </c-col>
+    </c-row>
+    <c-row *ngIf="!isValidOneRepMax">
+      <c-col xs="3"></c-col>
+      <c-col xs="9">
+        <small class="input-error ms-1">1RM input invalid: only positive number can be inputted</small>
+      </c-col>
+    </c-row>
+    <c-row class="mt-1 mb-1">
+      <c-col xs="3">
+        Experience:
+      </c-col>
+      <c-col xs="3" class="pe-0 me-1">
+        <select [(ngModel)]="selectedExperience_year" aria-label="Default select example" cSelect>
+          <option value=0>Year</option>
+          <option value=0>0</option>
+          <option value=1>1</option>
+          <option value=2>2</option>
+          <option value=3>3</option>
+          <option value=4>4</option>
+          <option value=5>5</option>
+          <option value=6>6</option>
+          <option value=7>7</option>
+          <option value=8>8</option>
+          <option value=9>9</option>
+          <option value=10>10</option>
+          <option value=11>11</option>
+          <option value=12>12</option>
+          <option value=13>13</option>
+          <option value=14>14</option>
+          <option value=15>15</option>
+          <option value=16>16</option>
+          <option value=17>17</option>
+          <option value=18>18</option>
+          <option value=19>19</option>
+          <option value=20>20+</option>
+        </select>
+      </c-col>
+      <c-col xs="3" class="p-0">
+        <select [(ngModel)]="selectedExperience_month" aria-label="Default select example" cSelect>
+          <option value=0>Month</option>
+          <option value=0>0</option>
+          <option value=1>1</option>
+          <option value=2>2</option>
+          <option value=3>3</option>
+          <option value=4>4</option>
+          <option value=5>5</option>
+          <option value=6>6</option>
+          <option value=7>7</option>
+          <option value=8>8</option>
+          <option value=9>9</option>
+          <option value=10>10</option>
+          <option value=11>11</option>
+        </select>
+      </c-col>
+    </c-row>
+    <c-row class="mt-1 mb-1">
+      <c-col xs="3">
+        Lifting date:
+      </c-col>
+      <c-col xs="6">
+        <form >
+          <div class="col-12">
+            <div class="input-group">
+              <input
+                class="form-control"
+                placeholder="yyyy-mm-dd"
+                name="dp"
+                ngbDatepicker
+                #d="ngbDatepicker"
+                [(ngModel)]="today"
+              />
+              <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()" type="button"></button>
+            </div>
+          </div>
+        </form>
+      </c-col>
+    </c-row>
+
+  </c-modal-body>
+  <c-modal-footer>
+    <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary">
+      Close
+    </button>
+    <button [cModalToggle]="verticallyCenteredModal.id" cButton color="primary" (click)="addRecordButton()">Add Record</button>
+  </c-modal-footer>
+</c-modal>

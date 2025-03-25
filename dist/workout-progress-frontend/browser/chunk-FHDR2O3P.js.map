@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/environment/environment.ts"],
+  "sourcesContent": ["export const environment = {\n  production: false,\n  backend_apiUrl: 'http://localhost:5166',\n  OAuth_ClientID: '171727409151-9sh42ke1r3mv5v5tocj6q46mfihkbt93.apps.googleusercontent.com',\n};\n"],
+  "mappings": ";AAAO,IAAM,cAAc;EACzB,YAAY;EACZ,gBAAgB;EAChB,gBAAgB;;",
+  "names": []
+}

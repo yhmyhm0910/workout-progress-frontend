@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/views/faqs/routes.ts"],
+  "sourcesContent": ["import { Routes } from '@angular/router';\n\nexport const routes: Routes = [\n  {\n    path: '',\n    loadComponent: () => import('./faqs.component').then(m => m.FAQsComponent),\n    data: {\n      title: $localize`FAQs`\n    }\n  }\n];\n"],
+  "mappings": ";;;AAEO,IAAM,SAAiB;EAC5B;IACE,MAAM;IACN,eAAe,MAAM,OAAO,8BAAkB,EAAE,KAAK,OAAK,EAAE,aAAa;IACzE,MAAM;MACJ,OAAO;;;;",
+  "names": []
+}

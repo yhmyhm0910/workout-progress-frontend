@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/views/profile/routes.ts"],
+  "sourcesContent": ["import { Routes } from '@angular/router';\n\nexport const routes: Routes = [\n  {\n    path: '',\n    loadComponent: () => import('./profile.component').then(m => m.ProfileComponent),\n    data: {\n      title: $localize`Profile`\n    }\n  }\n];\n"],
+  "mappings": ";;;AAEO,IAAM,SAAiB;EAC5B;IACE,MAAM;IACN,eAAe,MAAM,OAAO,iCAAqB,EAAE,KAAK,OAAK,EAAE,gBAAgB;IAC/E,MAAM;MACJ,OAAO;;;;",
+  "names": []
+}

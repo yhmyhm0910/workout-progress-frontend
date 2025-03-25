@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/views/one-rep-max-calculator/one-rep-max-calculator.component.ts", "src/app/views/one-rep-max-calculator/one-rep-max-calculator.component.html"],
+  "sourcesContent": ["import { Component, OnInit } from '@angular/core';\n\n@Component({\n  templateUrl: 'one-rep-max-calculator.component.html',\n  standalone: true,\n})\n\nexport class OneRepMaxCalculatorComponent implements OnInit {\n\n  constructor(\n  ) {\n  }\n\n  ngOnInit(): void {\n  };\n\n};\n", "<div>\n  Will be available soon!\n</div>\n"],
+  "mappings": ";;;;;;;;;;;AAOM,IAAO,gCAAP,MAAO,8BAA4B;EAEvC,cAAA;EAEA;EAEA,WAAQ;EACR;;;mCAPW,+BAA4B;AAAA;8FAA5B,+BAA4B,WAAA,CAAA,CAAA,cAAA,CAAA,GAAA,YAAA,MAAA,UAAA,CAAA,6BAAA,GAAA,OAAA,GAAA,MAAA,GAAA,UAAA,SAAA,sCAAA,IAAA,KAAA;AAAA,MAAA,KAAA,GAAA;ACPzC,IAAA,yBAAA,GAAA,KAAA;AACE,IAAA,iBAAA,GAAA,4BAAA;AACF,IAAA,uBAAA;;;ADKM,IAAO,+BAAP;;6EAAO,8BAA4B,EAAA,WAAA,+BAAA,CAAA;AAAA,GAAA;",
+  "names": []
+}

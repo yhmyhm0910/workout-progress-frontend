@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/views/one-rep-max-calculator/routes.ts"],
+  "sourcesContent": ["import { Routes } from '@angular/router';\n\nexport const routes: Routes = [\n  {\n    path: '',\n    loadComponent: () => import('./one-rep-max-calculator.component').then(m => m.OneRepMaxCalculatorComponent),\n    data: {\n      title: $localize`One Rep Max Calculator`\n    }\n  }\n];\n"],
+  "mappings": ";;;AAEO,IAAM,SAAiB;EAC5B;IACE,MAAM;IACN,eAAe,MAAM,OAAO,gDAAoC,EAAE,KAAK,OAAK,EAAE,4BAA4B;IAC1G,MAAM;MACJ,OAAO;;;;",
+  "names": []
+}

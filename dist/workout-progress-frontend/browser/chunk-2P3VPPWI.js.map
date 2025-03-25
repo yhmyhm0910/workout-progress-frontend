@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/globals.service.ts"],
+  "sourcesContent": ["import { Injectable } from '@angular/core';\nimport { BehaviorSubject } from 'rxjs';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class GlobalsService {\n  public access_token: string = \"\";\n  public id_token: string = \"\";\n  public user_full_name: string = \"\";\n  public email: string = \"\";\n\n  private userIdSubject = new BehaviorSubject<string | null>(null);\n  public userId$ = this.userIdSubject.asObservable(); // Observable for other components to subscribe to\n\n  set userId(value: string) {\n    this.userIdSubject.next(value);\n  }\n\n  get userId(): string | null {\n    return this.userIdSubject.value;\n  }\n\n  constructor() { }\n}\n"],
+  "mappings": ";;;;;;AAMM,IAAO,kBAAP,MAAO,gBAAc;EASzB,IAAI,OAAO,OAAa;AACtB,SAAK,cAAc,KAAK,KAAK;EAC/B;EAEA,IAAI,SAAM;AACR,WAAO,KAAK,cAAc;EAC5B;EAEA,cAAA;AAhBO,SAAA,eAAuB;AACvB,SAAA,WAAmB;AACnB,SAAA,iBAAyB;AACzB,SAAA,QAAgB;AAEf,SAAA,gBAAgB,IAAI,gBAA+B,IAAI;AACxD,SAAA,UAAU,KAAK,cAAc,aAAY;EAUhC;;;mCAjBL,iBAAc;AAAA;mFAAd,iBAAc,SAAd,gBAAc,WAAA,YAFb,OAAM,CAAA;AAEd,IAAO,iBAAP;",
+  "names": []
+}
